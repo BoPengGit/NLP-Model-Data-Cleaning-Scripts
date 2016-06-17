@@ -49,7 +49,7 @@ def extract_candidate_chunks(text, grammar=r'KT: {(<ADJ>​* <NOUN.*>+ <ADP>)? <
     stop_words = set(nltk.corpus.stopwords.words('english'))
     # tokenize, POS-tag, and chunk using regular expressions
     chunker = nltk.chunk.regexp.RegexpParser(grammar)
-    tagged_sents = nltk.pos_tag_sents(nltk.word_tokenize(sent) for sent in nltk.sent_tokenize(text))
+    tagged_sents = POS(text)
     all_chunks = list(itertools.chain.from_iterable(nltk.chunk.tree2conlltags(chunker.parse(tagged_sent))
                                                    for tagged_sent in tagged_sents))
     # join constituent chunk words into a single chunked phrase
