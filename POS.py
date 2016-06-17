@@ -60,7 +60,20 @@ def extract_candidate_chunks(text, grammar=r'KT: {(<ADJ>​* <NOUN.*>+ <ADP>)? <
         if cand not in stop_words and not all(char in punct for char in cand)]
 
 
-# In[ ]:
+# In[12]:
 
+def extract_candidate_words(text, good_tags=set(['ADJ','NOUN','JJS','PRON','PROPN'])):
+    import itertools, nltk, string
 
+    # exclude candidates that are stop words or entirely punctuation
+    punct = set(string.punctuation)
+    stop_words = set(nltk.corpus.stopwords.words('english'))
+    # tokenize and POS-tag words
+    tagged_words = itertools.chain.from_iterable(POS(sent))
+    # filter on certain POS tags and lowercase all words
+    candidates = [word.lower() for word, tag in tagged_words
+        if tag in good_tags and word.lower() not in stop_words
+        and not all(char in punct for char in word)]
+
+    return candidates
 
